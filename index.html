@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atman Protocol - Quantum Neumorphism</title>
+    <style>
+        /*
+        ====================================================
+        II. CSS STYLING - QUANTUM NEUMORPHISM WITH CONTRADICTION
+        ====================================================
+        */
+        :root {
+            --primary-color: #007bff;
+            --success-color: #4CAF50;
+            --error-color: #f44336;
+            --gold-color: #FFD700;
+
+            --fold-duration: 0.7s; 
+        }
+
+        /* Base Reset and Layout */
+        body {
+            background: #000000; /* BLACK BACKGROUND BY DEFAULT */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            perspective: 1500px; 
+            overflow: hidden; 
+            position: relative;
+            color: white;
+            transition: all 0.8s ease-in-out;
+        }
+
+        /* WHEN LOGIN IS ACTIVE = BLACK BACKGROUND (contradicts white container) */
+        body.login-active {
+            background: #000000;
+        }
+
+        /* WHEN REGISTER IS ACTIVE = WHITE BACKGROUND (contradicts black container) */
+        body.register-active {
+            background: #ffffff;
+        }
+
+        /* --- BACKGROUND DUST PARTICLES --- */
+        .dust-container {
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            pointer-events: none; 
+            z-index: -2; 
+            overflow: hidden;
+            transition: all 0.8s ease-in-out;
+        }
+
+        .dust-particle {
+            position: absolute; 
+            width: 3px; 
+            height: 3px;
+            border-radius: 50%;
+            opacity: 0.7; 
+            animation: slowDrift 40s infinite linear; 
+            transition: all 0.8s ease-in-out;
+        }
+
+        /* BLACK BACKGROUND = WHITE PARTICLES */
+        body.login-active .dust-particle {
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+        }
+
+        /* WHITE BACKGROUND = BLACK PARTICLES */  
+        body.register-active .dust-particle {
+            background-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+        }
+
+        @keyframes slowDrift {
+            0% { transform: translate(0vw, 0vh) scale(1); opacity: 0.7; }
+            25% { transform: translate(100vw, 50vh) scale(1.5); opacity: 0.4; }
+            50% { transform: translate(50vw, 100vh) scale(0.8); opacity: 0.8; }
+            75% { transform: translate(-10vw, 30vh) scale(1.2); opacity: 0.5; }
+            100% { transform: translate(0vw, 0vh) scale(1); opacity: 0.7; }
+        }
+        
+        /* === ADVANCED NEUMORPHISM INPUTS === */
+        label { 
+            font-size: 0.85rem; 
+            margin-top: 15px; 
+            margin-bottom: 8px;
+            font-weight: 500; 
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.8s ease-in-out;
+        }
+
+        /* LOGIN CONTAINER = WHITE TEXT */
+        .login-card label {
+            color: #333333;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        /* REGISTER CONTAINER = BLACK TEXT */
+        .signup-card label {
+            color: #ffffff;
+            text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+        }
+        
+        input {
+            padding: 14px 16px; 
+            border: none; 
+            border-radius: 12px;
+            font-size: 0.95rem;
+            outline: none; 
+            transition: all 0.4s ease-in-out; 
+            width: 100%; 
+            box-sizing: border-box; 
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* LOGIN INPUTS = LIGHT NEUMORPHISM */
+        .login-card input {
+            background: #e0e0e0;
+            color: #333333;
+            box-shadow: 
+                inset 3px 3px 6px #bebebe,
+                inset -3px -3px 6px #ffffff,
+                0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-card input::placeholder {
+            color: rgba(0, 0, 0, 0.4);
+        }
+
+        .login-card input:focus {
+            background: #e8e8e8;
+            box-shadow: 
+                inset 4px 4px 8px #bebebe,
+                inset -4px -4px 8px #ffffff,
+                0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        /* REGISTER INPUTS = DARK NEUMORPHISM */
+        .signup-card input {
+            background: #2a2a2a;
+            color: #ffffff;
+            box-shadow: 
+                inset 3px 3px 6px #1f1f1f,
+                inset -3px -3px 6px #353535,
+                0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .signup-card input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .signup-card input:focus {
+            background: #2e2e2e;
+            box-shadow: 
+                inset 4px 4px 8px #1f1f1f,
+                inset -4px -4px 8px #353535,
+                0 0 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        h2 { 
+            text-align: center; 
+            margin-bottom: 25px; 
+            font-weight: 300; 
+            text-transform: uppercase; 
+            letter-spacing: 3px; 
+            font-size: 1.5rem; 
+            transition: all 0.8s ease-in-out;
+            position: relative;
+        }
+
+        /* GOLD SHADOW EFFECT FOR HEADERS */
+        .login-card h2 {
+            color: #333333;
+            text-shadow: 
+                0 0 1px var(--gold-color),
+                0 0 2px var(--gold-color),
+                0 0 3px var(--gold-color);
+        }
+
+        .signup-card h2 {
+            color: #ffffff;
+            text-shadow: 
+                0 0 1px var(--gold-color),
+                0 0 2px var(--gold-color),
+                0 0 3px var(--gold-color);
+        }
+
+        /* --- QUANTUM CONTAINERS WITH TRIPLE BLACK SHADOWS --- */
+        .login-card, .signup-card {
+            width: clamp(280px, 75vw, 350px); 
+            padding: 30px; 
+            border-radius: 20px;
+            position: absolute; 
+            backface-visibility: hidden; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 5px; 
+            transition: all 0.8s ease-in-out; 
+            will-change: transform, opacity;
+            overflow: hidden;
+            
+            /* TRIPLE BLACK SHADOW EFFECT */
+            box-shadow: 
+                /* First layer - subtle spread */
+                0 2px 10px rgba(0, 0, 0, 0.1),
+                0 8px 20px rgba(0, 0, 0, 0.15),
+                0 18px 40px rgba(0, 0, 0, 0.2),
+                
+                /* Second layer - medium spread */
+                0 25px 50px rgba(0, 0, 0, 0.25),
+                0 35px 70px rgba(0, 0, 0, 0.3),
+                
+                /* Third layer - wide spread */
+                0 50px 100px rgba(0, 0, 0, 0.4),
+                
+                /* Inner shadow for depth */
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* LOGIN CONTAINER = WHITE NEUMORPHISM */
+        .login-card {
+            background: linear-gradient(145deg, #f0f0f0, #cacaca);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* REGISTER CONTAINER = BLACK NEUMORPHISM */
+        .signup-card {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border: 1px solid rgba(0, 0, 0, 0.3);
+        }
+
+        /* --- FOLDING ANIMATION - PERFECT ALIGNMENT --- */
+        .container-master { 
+            width: 100%; 
+            max-width: 350px; 
+            position: relative;
+            min-height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .card-flipper { 
+            transition: transform var(--fold-duration) ease-in-out; 
+            transform-style: preserve-3d; 
+            position: relative; 
+            width: 100%;
+            min-height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-card, .signup-card {
+            transform-style: preserve-3d;
+        }
+
+        .login-card { 
+            transform: translate(-50%, -50%) rotateY(0deg); 
+            opacity: 1; 
+            position: absolute;
+            top: 50%;
+            left: 50%;
+        }
+        
+        .signup-card { 
+            transform: translate(-50%, -50%) rotateY(180deg); 
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+        }
+
+        .card-flipper.flip .login-card { 
+            transform: translate(-50%, -50%) rotateY(-180deg); 
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .card-flipper.flip .signup-card { 
+            transform: translate(-50%, -50%) rotateY(0deg); 
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* --- NEUMORPHIC BUTTONS --- */
+        .gum-button {
+            margin-top: 25px; 
+            padding: 16px; 
+            border: none; 
+            border-radius: 15px; 
+            cursor: pointer; 
+            font-weight: 700; 
+            letter-spacing: 1.5px; 
+            position: relative;
+            transition: all 0.4s ease-in-out; 
+            text-transform: uppercase; 
+            overflow: hidden; 
+            font-size: 0.9rem;
+            z-index: 2;
+        }
+
+        /* LOGIN BUTTON = LIGHT NEUMORPHISM */
+        .login-card .gum-button {
+            background: linear-gradient(145deg, #f0f0f0, #cacaca);
+            color: #333333;
+            box-shadow: 
+                5px 5px 10px #bebebe,
+                -5px -5px 10px #ffffff,
+                inset 1px 1px 2px rgba(255, 255, 255, 0.8),
+                inset -1px -1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-card .gum-button:hover {
+            box-shadow: 
+                3px 3px 6px #bebebe,
+                -3px -3px 6px #ffffff,
+                inset 2px 2px 4px rgba(255, 255, 255, 0.8),
+                inset -2px -2px 4px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+            color: var(--gold-color);
+        }
+
+        .login-card .gum-button:active {
+            box-shadow: 
+                inset 4px 4px 8px #bebebe,
+                inset -4px -4px 8px #ffffff;
+            transform: translateY(1px);
+        }
+
+        /* REGISTER BUTTON = DARK NEUMORPHISM */
+        .signup-card .gum-button {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            color: #ffffff;
+            box-shadow: 
+                5px 5px 10px #1f1f1f,
+                -5px -5px 10px #353535,
+                inset 1px 1px 2px rgba(255, 255, 255, 0.1),
+                inset -1px -1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .signup-card .gum-button:hover {
+            box-shadow: 
+                3px 3px 6px #1f1f1f,
+                -3px -3px 6px #353535,
+                inset 2px 2px 4px rgba(255, 255, 255, 0.1),
+                inset -2px -2px 4px rgba(0, 0, 0, 0.5);
+            transform: translateY(-2px);
+            color: var(--gold-color);
+        }
+
+        .signup-card .gum-button:active {
+            box-shadow: 
+                inset 4px 4px 8px #1f1f1f,
+                inset -4px -4px 8px #353535;
+            transform: translateY(1px);
+        }
+
+        .gum-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .spinner { 
+            border: 3px solid rgba(255, 255, 255, 0.3); 
+            border-top: 3px solid var(--gold-color); 
+            border-radius: 50%; 
+            width: 20px; 
+            height: 20px; 
+            animation: spin 0.8s linear infinite; 
+            margin: 0 auto; 
+        }
+        
+        @keyframes spin { 
+            0% { transform: rotate(0deg); } 
+            100% { transform: rotate(360deg); } 
+        }
+        
+        #notification-box { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            width: 300px; 
+            padding: 15px 20px; 
+            border-radius: 10px; 
+            color: white; 
+            font-weight: bold; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
+            z-index: 1000; 
+            transform: translateX(400px); 
+            transition: transform 0.4s ease-out; 
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        #notification-box.show { transform: translateX(0); }
+        #notification-box.success { background-color: var(--success-color); }
+        #notification-box.error { background-color: var(--error-color); }
+
+        .toggle-link {
+            text-align: center;
+            margin-top: 25px;
+            transition: all 0.8s ease-in-out;
+        }
+        
+        .toggle-link a {
+            color: var(--gold-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+            text-shadow: 0 0 2px var(--gold-color);
+        }
+        
+        .toggle-link a:hover {
+            color: #ffed4e;
+            text-decoration: underline;
+            text-shadow: 0 0 5px var(--gold-color);
+        }
+
+        .login-card .toggle-link {
+            color: #333333;
+        }
+
+        .signup-card .toggle-link {
+            color: #ffffff;
+        }
+
+        .caps-warning {
+            font-size: 0.75rem;
+            display: none;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        .login-card .caps-warning {
+            color: #d32f2f;
+            text-shadow: 0 0 2px rgba(211, 47, 47, 0.5);
+        }
+
+        .signup-card .caps-warning {
+            color: #ff6b6b;
+            text-shadow: 0 0 2px rgba(255, 107, 107, 0.5);
+        }
+
+    </style>
+</head>
+<body class="login-active">
+
+    <div class="dust-container" id="dust-container">
+        <!-- Dust particles will be generated by JavaScript -->
+    </div>
+
+    <div id="notification-box"></div>
+
+    <div class="container-master">
+        <div class="card-flipper" id="card-flipper">
+            
+            <div class="login-card" id="login-card">
+                <h2>LOGIN</h2>
+                <form id="login-form">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" placeholder="Enter your e-mail" required>
+                    
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                    <span id="caps-lock-warning" class="caps-warning">Caps Lock is ON</span>
+                    
+                    <label for="captcha">Captcha</label>
+                    <input type="text" id="captcha" placeholder="Enter captcha" required>
+                    
+                    <button type="submit" class="gum-button" id="login-button">
+                        <span class="button-text">SIGN IN</span>
+                    </button>
+                </form>
+                <p class="toggle-link">
+                    <span class="toggle-text">
+                        Don't have an account? <a href="#" id="switch-to-signup">Sign Up</a>
+                    </span>
+                </p>
+            </div>
+
+            <div class="signup-card" id="signup-card">
+                <h2>REGISTER</h2>
+                <form id="signup-form">
+                    <label for="new-email">E-mail</label>
+                    <input type="email" id="new-email" placeholder="Enter your e-mail" required>
+                    
+                    <label for="new-username">Username</label>
+                    <input type="text" id="new-username" placeholder="Create username" required>
+
+                    <label for="new-password">Password</label>
+                    <input type="password" id="new-password" placeholder="Create password" required>
+
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" placeholder="Confirm password" required>
+                    
+                    <button type="submit" class="gum-button" id="register-button">
+                        <span class="button-text">REGISTER</span>
+                    </button>
+                </form>
+                <p class="toggle-link">
+                    <span class="toggle-text">
+                        <a href="#" id="switch-to-login">Back to Login</a>
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const flipper = document.getElementById('card-flipper');
+            const loginCard = document.getElementById('login-card');
+            const signupCard = document.getElementById('signup-card');
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const notificationBox = document.getElementById('notification-box');
+            const passwordInput = document.getElementById('password');
+            const capsWarning = document.getElementById('caps-lock-warning');
+            const dustContainer = document.getElementById('dust-container');
+            const body = document.body;
+            
+            const FOLD_DURATION_MS = 700;
+
+            // --- DUST PARTICLE GENERATOR ---
+            function generateDustParticles() {
+                const particleCount = 20;
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'dust-particle';
+                    
+                    const left = Math.random() * 100;
+                    const top = Math.random() * 100;
+                    const delay = Math.random() * 30;
+                    const duration = 30 + Math.random() * 40;
+                    
+                    particle.style.left = `${left}%`;
+                    particle.style.top = `${top}%`;
+                    particle.style.animationDelay = `${delay}s`;
+                    particle.style.animationDuration = `${duration}s`;
+                    
+                    dustContainer.appendChild(particle);
+                }
+            }
+
+            // --- NOTIFICATION FUNCTION ---
+            function showNotification(message, type = 'success', duration = 3000) {
+                clearTimeout(window.notificationTimeout);
+                notificationBox.textContent = message;
+                notificationBox.className = ''; 
+                notificationBox.classList.add(type, 'show');
+
+                window.notificationTimeout = setTimeout(() => {
+                    notificationBox.classList.remove('show');
+                }, duration);
+            }
+
+            // --- BUTTON SUBMISSION EFFECT ---
+            function handleFormSubmit(event, buttonId, message) {
+                event.preventDefault();
+                const button = document.getElementById(buttonId);
+                const buttonTextSpan = button.querySelector('.button-text');
+                const originalText = buttonTextSpan.textContent;
+
+                buttonTextSpan.innerHTML = '<div class="spinner"></div>';
+                button.disabled = true;
+
+                setTimeout(() => {
+                    buttonTextSpan.textContent = originalText;
+                    button.disabled = false;
+                    showNotification(message, 'success');
+                    event.target.reset(); 
+                }, 1500); 
+            }
+
+            // --- BACKGROUND CONTRADICTION SYSTEM ---
+            function updateBackgroundContradiction(target) {
+                const isFlippingToSignup = target === 'signup';
+                
+                if (isFlippingToSignup) {
+                    body.classList.remove('login-active');
+                    body.classList.add('register-active');
+                } else {
+                    body.classList.remove('register-active');
+                    body.classList.add('login-active');
+                }
+            }
+
+            // --- FOLDING ANIMATION LOGIC ---
+            function performFold(target) {
+                const isFlippingToSignup = target === 'signup';
+                
+                // Update background contradiction first
+                updateBackgroundContradiction(target);
+                
+                // Then flip the card
+                if (isFlippingToSignup) {
+                    flipper.classList.add('flip');
+                } else {
+                    flipper.classList.remove('flip');
+                }
+            }
+
+            // --- Event Bindings ---
+            function bindEvents() {
+                // Toggle Links
+                document.getElementById('switch-to-signup').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    performFold('signup');
+                });
+                
+                document.getElementById('switch-to-login').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    performFold('login');
+                });
+
+                // Forms
+                loginForm.addEventListener('submit', (e) => handleFormSubmit(e, 'login-button', 'Quantum Access Granted! Welcome back.'));
+                signupForm.addEventListener('submit', (e) => handleFormSubmit(e, 'register-button', 'Identity Encoded. Welcome to the Protocol.'));
+
+                // Caps Lock Warning
+                if (passwordInput && capsWarning) {
+                    passwordInput.addEventListener('keyup', (e) => {
+                        if (e.getModifierState('CapsLock')) {
+                            capsWarning.style.display = 'block';
+                        } else {
+                            capsWarning.style.display = 'none';
+                        }
+                    });
+                    
+                    passwordInput.addEventListener('blur', () => {
+                        capsWarning.style.display = 'none';
+                    });
+                }
+                
+                // Auto-Advance on Enter Key
+                document.querySelectorAll('#login-form input').forEach((input, index, list) => {
+                    input.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault(); 
+                            const nextInput = list[index + 1];
+                            if (nextInput) {
+                                nextInput.focus(); 
+                            } else {
+                                document.getElementById('login-button').focus(); 
+                            }
+                        }
+                    });
+                });
+            }
+
+            // Initial Setup
+            function initialize() {
+                generateDustParticles();
+                bindEvents();
+                
+                // Set initial heights
+                const loginHeight = loginCard.offsetHeight;
+                const signupHeight = signupCard.offsetHeight;
+                const maxHeight = Math.max(loginHeight, signupHeight);
+                
+                flipper.style.minHeight = `${maxHeight}px`;
+                document.querySelector('.container-master').style.minHeight = `${maxHeight}px`;
+            }
+
+            window.addEventListener('load', initialize);
+        });
+    </script>
+</body>
+</html>
